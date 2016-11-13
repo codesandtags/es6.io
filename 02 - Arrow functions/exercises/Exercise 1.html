@@ -6,6 +6,8 @@
 </head>
 <body>
 
+<h1>Hola k hace</h1>
+
 <ul>
   <li data-time="5:17">Flexbox Video</li>
   <li data-time="8:22">Flexbox Video</li>
@@ -32,14 +34,25 @@
 <script>
 
   // Select all the list items on the page and convert to array
+  const list = Array.from(document.querySelectorAll('li'));
 
   // Filter for only the elements that contain the word 'flexbox'
+  const itemsFiltered = list
+          .filter(item => item.textContent.startsWith('Flexbox'))
+          // map down to a list of time strings
+          .map(item => item.dataset.time)
+          // map to an array of seconds
+          .map(time => {
+              const seconds = 60;
+              const chunk = time
+                      .split(':')
+                      .map(portion => parseFloat(portion));
+              return (chunk[0] * seconds) + chunk[1]
+          })
+          // reduce to get total
+          .reduce((totalTime, seconds) => totalTime + seconds);
 
-  // map down to a list of time strings
-
-  // map to an array of seconds
-
-  // reduce to get total
+  console.log('answer : ' + itemsFiltered);
 
   // 🔥 This can also be done in a single .reduce(), but we're practicing arrow functions here, so chain them!
 
